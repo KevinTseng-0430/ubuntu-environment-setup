@@ -1,0 +1,10 @@
+#2024.8.25-v1
+#apt update
+sudo apt update -y
+
+#install basic packages
+sudo apt install -y net-tools git vim ssh ufw traceroute wget curl
+
+#disable blank screen and screen saver
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+gsettings set org.gnome.desktop.session idle-delay 0
