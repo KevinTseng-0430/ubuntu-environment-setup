@@ -7,3 +7,5 @@ chmod +x xrdp-installer-1.4.3.sh
 # must disable the auto-login function
 
 # and reboot the server!
+
+# https://c-nergy.be/blog/?p=18205
