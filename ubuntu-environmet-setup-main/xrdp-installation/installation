@@ -1,9 +1,0 @@
-unzip xrdp-installer-1.4.3.zip 
-
-chmod +x xrdp-installer-1.4.3.sh
-
-./xrdp-installer-1.4.3.sh -s  
-
-# must disable the auto-login function
-
-# and reboot the server!
