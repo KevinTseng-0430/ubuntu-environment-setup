@@ -1,2 +1,2 @@
 ##How to use?
-bash ......
+bash environment-setup
