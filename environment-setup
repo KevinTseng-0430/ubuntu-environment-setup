@@ -1,10 +1,77 @@
-#2024.8.25-v1
-#apt update
+#!/bin/bash
+# Ubuntu Server Environment Setup Script
+# Version: 2026.1.9-v2
+# This script sets up a basic Ubuntu server environment with essential packages and configurations.
+
+set -e  # Exit on any error
+
+echo "Starting Ubuntu server environment setup..."
+
+# Update package list
+echo "Updating package list..."
 sudo apt update -y
 
-#install basic packages
-sudo apt install -y net-tools git vim ssh ufw traceroute wget curl
+# Upgrade system packages
+echo "Upgrading system packages..."
+sudo apt upgrade -y
 
-#disable blank screen and screen saver
-gsettings set org.gnome.desktop.screensaver lock-enabled false
-gsettings set org.gnome.desktop.session idle-delay 0
+# Install essential packages for server management
+echo "Installing essential packages..."
+sudo apt install -y \
+    build-essential \
+    curl \
+    wget \
+    git \
+    vim \
+    htop \
+    tmux \
+    net-tools \
+    traceroute \
+    ufw \
+    openssh-server \
+    fail2ban \
+    unattended-upgrades \
+    chrony \
+    python3 \
+    python3-pip \
+    python3-venv \
+    software-properties-common \
+    apt-transport-https \
+    ca-certificates \
+    gnupg \
+    lsb-release
+
+# Configure firewall (UFW)
+echo "Configuring firewall..."
+sudo ufw --force enable
+sudo ufw allow ssh
+sudo ufw allow 22/tcp
+
+# Enable and start SSH service
+echo "Ensuring SSH service is running..."
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+# Configure automatic security updates
+echo "Configuring automatic security updates..."
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+
+# Disable blank screen and screen saver (only if GNOME is installed)
+if command -v gsettings &> /dev/null && pgrep -x "gnome-session" > /dev/null; then
+    echo "Disabling screen saver and blank screen for GNOME desktop..."
+    gsettings set org.gnome.desktop.screensaver lock-enabled false
+    gsettings set org.gnome.desktop.session idle-delay 0
+else
+    echo "GNOME not detected or not running. Skipping desktop-specific settings."
+fi
+
+# Clean up
+echo "Cleaning up..."
+sudo apt autoremove -y
+sudo apt autoclean
+
+echo "Ubuntu server environment setup completed successfully!"
+echo "Recommended next steps:"
+echo "- Reboot the server: sudo reboot"
+echo "- Configure SSH keys for secure access"
+echo "- Review and customize /etc/fail2ban/jail.local for security"
