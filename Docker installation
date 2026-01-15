@@ -10,4 +10,5 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 
 # Add your username to the docker group, otherwise you will have to run in sudo mode.
 sudo usermod -a -G docker $(whoami)
-sudo reboot
+echo "Need to re-login or reboot the server!"
+# sudo reboot
